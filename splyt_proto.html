@@ -111,7 +111,7 @@
 
 				// Geometry
 
-				function  createSplytLine(){
+				function createSplytLine(){
 
 					var skeleton = new THREE.Geometry();
 					skeleton.vertices.push(
@@ -149,12 +149,12 @@
 
 					var rArm = new THREE.CylinderGeometry(r, r, armLength, 16, 6, false);
 					rArm.rotateZ(-Math.radians(45));
-					rArm.translate(1.5, bHeight + 1.4, 0);
+					rArm.translate(1.5, bHeight + 1.35, 0);
 
 					var lArm = new THREE.CylinderGeometry(r, r, armLength, 16, 6, false);
 					var moveVec = new THREE.Vector3( 1, 1, 0);
-					lArm.rotateZ(Math.radians(45));
-					lArm.translate(-1.5, bHeight + 1.4, 0);
+					lArm.rotateZ( Math.radians(45) );
+					lArm.translate(-1.5, bHeight + 1.35, 0);
 
 
 					var materials = [
@@ -166,7 +166,7 @@
 					smallYGeo.merge(base, base.matrix);
 					smallYGeo.merge(rArm, rArm.matrix);
 					smallYGeo.merge(lArm, lArm.matrix);
-					smallYGeo.rotateY(Math.radians(45));
+					smallYGeo.rotateY(Math.radians( 180 * Math.random() ));
 
 					var smallYMesh = new THREE.SceneUtils.createMultiMaterialObject(smallYGeo, materials);
 					smallYMesh.name = name;

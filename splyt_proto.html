@@ -16,8 +16,7 @@
 			(function() {
 				if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
-				var scene, camera, controls, renderer;
-				var materials;
+				var scene, camera, controls, renderer, materials;
 				var pi = 3.14159;
 
 				init();
@@ -36,7 +35,7 @@
 					camera.position.z = 10;
 
 					controls = new THREE.OrbitControls(camera);
-					// controls.addEventListener('change', render);
+					controls.addEventListener('change', render);
 
 					renderer = new THREE.WebGLRenderer();
 					//renderer.setClearColorHex(0xffffff, 1.0);
@@ -48,23 +47,23 @@
 					// GUIpanel
 
 		     	var GUIpanel = new function() {
-		          this.bHeight = 0.02;
-		          this.Ypos = 0.03;
+		          this.bHeight = 5;
+		          this.Ypos = 3;
 		      }
 
 		      var gui = new dat.GUI();
 		      var bHeightController = gui.add(GUIpanel, 'bHeight', 0, 10);
 		      var yPosController = gui.add(GUIpanel, 'Ypos', 0, 5);
 
-					bHeightController.onChange(function(value) {
-						scene.remove(scene.getObjectByName('splyt'));
-						var newMesh = createSplyt('splyt', {
-							radius: 0.5,
-							baseHeight: value
-						});
-						scene.add(newMesh);
-						render();
-					});
+					// bHeightController.onChange(function(value) {
+					// 	scene.remove(scene.getObjectByName('splyt'));
+					// 	var newMesh = createSplytCylinders('splyt', {
+					// 		radius: 0.5,
+					// 		baseHeight: value
+					// 	});
+					// 	scene.add(newMesh);
+					// 	render();
+					// });
 
 
 		      //AxisHelper
@@ -75,12 +74,12 @@
 		      // Ground plane
 
 		      var planeGeometry = new THREE.PlaneGeometry(10,10,1,1);
-		      var planeMaterial =    new THREE.MeshLambertMaterial({color: 0xffffff, transparent: true, opacity: 0.3, side: THREE.DoubleSide});
+		      var planeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff, transparent: true, opacity: 0.3, side: THREE.DoubleSide});
 		      var plane = new THREE.Mesh(planeGeometry,planeMaterial);
 		      plane.receiveShadow  = true;
-		      plane.rotation.x=-0.5*Math.PI;
-					plane.position.set(0,0,0)
-		      scene.add(plane);
+		      plane.rotation.x= -0.5 * Math.PI;
+					plane.position.set( 0, 0, 0 )
+					scene.add(plane);
 
 					// lights
 
@@ -95,21 +94,57 @@
 					light = new THREE.AmbientLight( 0x222222 );
 					scene.add( light );
 
-					var splitGeometries = [
+					var splytCylinderSettings = [
 						{
 							radius: 0.5,
 							baseHeight: 5
 						}
 					];
 
-					splitGeometries.forEach(function(splitGeometry) {
-						scene.add(createSplyt('splyt', splitGeometry));
-					});
+					// splytCylinderSettings.forEach(function(splytGeometry) {
+					// 	scene.add(createSplytCylinders('splyt', splytGeometry));
+					// });
+
+					scene.add(createSplytLine());
 
 				}
 
 				// Geometry
-				function createSplyt(name, geometry) {
+				function  createSplytLine(){
+
+					var skeleton = new THREE.Geometry();
+					skeleton.vertices.push(
+							new THREE.Vector3(0, 0, 0),
+							new THREE.Vector3(0, 5, 0),
+							new THREE.Vector3(3, 7, 0),
+							new THREE.Vector3(0, 5, 0),
+							new THREE.Vector3(-3, 7, 0)
+					);
+
+					var materials = [
+						//new THREE.MeshLambertMaterial( { color:  0xFFF9DC, shading: THREE.FlatShading } ),
+						//new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true , transparent: true, opacity: 0.5} )
+					  new THREE.LineBasicMaterial({ color: 0x0000ff})
+					];
+					var material = new THREE.LineBasicMaterial({color: 0x0000ff});
+
+					var extrudeSettings = {
+						steps	: 200,
+						bevelEnabled	: false,
+						extrudePath		: skeleton
+					};
+
+					//var geometry = new THREE.ExtrudeGeometry( skeleton, extrudeSettings );
+					var pline = new THREE.Line(skeleton, material);
+
+					// geometry.rotation.y(rotation);
+					// geometry.position.set(planeIn);
+
+					return pline; //mesh = new THREE.Mesh( geometry, materials);
+
+				}
+				/*
+				function createSplytCylinders(name, geometry) {
 
 					var r = geometry.radius;
 					var bHeight = geometry.baseHeight;
@@ -139,6 +174,7 @@
 					smallYMesh.name = name;
 					return smallYMesh;
 				};
+				*/
 
 				function render() {
 					renderer.render(scene, camera);

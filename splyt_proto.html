@@ -12,6 +12,7 @@
 		<script src="js/Detector.js"></script>
 	  <script src="js/dat.gui.js"></script>
 		<script src="js/JSONLoader.js"></script>
+		<script src="js/BinaryLoader.js"></script>
 		<script>
 
 			(function() {
@@ -159,8 +160,8 @@
 
 
 					var materials = [
-						new THREE.MeshLambertMaterial( { color:  0xFFF9DC, shading: THREE.FlatShading } ),
-						new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true , transparent: true, opacity: 0.1} )
+						new THREE.MeshLambertMaterial( { color:  0xFFF9DC, shading: THREE.SmoothShading } )
+						//new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true , transparent: true, opacity: 0.1} )
 					];
 
 					var smallYGeo = new THREE.Geometry();
@@ -177,14 +178,13 @@
 				// load BULB
 
 				var loader = new THREE.JSONLoader();
-
 				loader.load(
-					'models/bulb_bin.js',
+					'models/bulb_custom.js',
 					function ( geometry, materials ) {
 						var material = new THREE.MultiMaterial( materials );
-						var object = new THREE.Mesh( geometry, material );
-						//object.scale.set(10);
-						scene.add( object );
+						var bulb = new THREE.Mesh( geometry, material );
+						bulb.position.set(0, 10, 0);
+						scene.add( bulb );
 					}
 				);
 

@@ -11,6 +11,7 @@
 		<script src="js/OrbitControls.js"></script>
 		<script src="js/Detector.js"></script>
 	  <script src="js/dat.gui.js"></script>
+		<script src="js/JSONLoader.js"></script>
 		<script>
 
 			(function() {
@@ -173,6 +174,21 @@
 					return smallYMesh;
 				};
 
+				// load BULB
+
+				var loader = new THREE.JSONLoader();
+
+				loader.load(
+					'models/bulb_bin.js',
+					function ( geometry, materials ) {
+						var material = new THREE.MultiMaterial( materials );
+						var object = new THREE.Mesh( geometry, material );
+						//object.scale.set(10);
+						scene.add( object );
+					}
+				);
+
+				// Render
 
 				function render() {
 					renderer.render(scene, camera);

@@ -75,7 +75,7 @@
 		      // Ground plane
 
 		      var planeGeometry = new THREE.PlaneGeometry(10,10,1,1);
-		      var planeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff, transparent: true, opacity: 0.3, side: THREE.DoubleSide});
+		      var planeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff, transparent: true, opacity: 0.7, side: THREE.DoubleSide});
 		      var plane = new THREE.Mesh(planeGeometry,planeMaterial);
 		      plane.receiveShadow  = true;
 		      plane.rotation.x= -0.5 * Math.PI;
@@ -86,30 +86,20 @@
 
 					light = new THREE.DirectionalLight( 0xffffff );
 					light.position.set( 10, 10, 10 );
-					scene.add( light );
+					scene.add(light);
 
 					light = new THREE.DirectionalLight( 0xffffff );
 					light.position.set( -10, -10, -10 );
-					scene.add( light );
+					scene.add(light);
 
 					light = new THREE.AmbientLight( 0x222222 );
-					scene.add( light );
+					scene.add(light);
 
-					var splytCylinderSettings = [
-						{
-							radius: 0.5,
-							baseHeight: 50
-						}
-					];
-
-					// splytCylinderSettings.forEach(function(splytGeometry) {
-					// 	scene.add(createSplytCylinders('splyt', splytGeometry));
-					// });
-
-					//scene.add(createSplytLine());
+					//scene.add(createSplytLine());  // skeleton wireframe
 					scene.add(createSplytCylinders());
 
 				}
+
 
 				// Geometry
 

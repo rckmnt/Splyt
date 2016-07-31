@@ -50,7 +50,7 @@
 					// GUIpanel
 					/*
 		     	var GUIpanel = new function() {
-		          this.bHeight = 5;
+		          this.rotation = 5;
 		          this.Ypos = 3;
 		      }
 
@@ -138,7 +138,7 @@
 					return pline;
 				}
 
-				function createSplytCylinders() {
+				function createSplytCylinders(rotation) {
 
 					var r = 0.5;
 					var bHeight = 5;
@@ -166,6 +166,7 @@
 					smallYGeo.merge(base, base.matrix);
 					smallYGeo.merge(rArm, rArm.matrix);
 					smallYGeo.merge(lArm, lArm.matrix);
+					smallYGeo.rotateY(Math.radians(45));
 
 					var smallYMesh = new THREE.SceneUtils.createMultiMaterialObject(smallYGeo, materials);
 					smallYMesh.name = name;

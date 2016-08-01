@@ -123,10 +123,6 @@
 					};
 
 					var pline = new THREE.Line(skeleton, lineMaterial);
-
-					// geometry.rotation.y(rotation);
-					// geometry.position.set(planeIn);
-
 					return pline;
 				}
 
@@ -136,17 +132,17 @@
 					var bHeight = 5;
 					var armLength = 4;
 
-					var base = new THREE.CylinderGeometry(r, r, bHeight, 16, 6, false);
+					var base = new THREE.CylinderGeometry(r, r, bHeight, 24, 8, false);
 					base.translate(0, bHeight/2, 0);
 
-					var rArm = new THREE.CylinderGeometry(r, r, armLength, 16, 6, false);
+					var rArm = new THREE.CylinderGeometry(r, r, armLength, 24, 8, false);
 					rArm.rotateZ(-Math.radians(45));
-					rArm.translate(1.5, bHeight + 1.35, 0);
+					rArm.translate(1.4, bHeight + 1.375, 0);
 
-					var lArm = new THREE.CylinderGeometry(r, r, armLength, 16, 6, false);
+					var lArm = new THREE.CylinderGeometry(r, r, armLength, 24, 8, false);
 					var moveVec = new THREE.Vector3( 1, 1, 0);
 					lArm.rotateZ( Math.radians(45) );
-					lArm.translate(-1.5, bHeight + 1.35, 0);
+					lArm.translate(-1.4, bHeight + 1.375, 0);
 
 
 					var materials = [

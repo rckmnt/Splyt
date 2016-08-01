@@ -2,7 +2,9 @@
 
 This is the start to a parametric UI for creating Splyt Lights. Splyt lights have only a few pieces and can be built upon by screwing Splyts together.
 
-Check out the Splyt Light at [splytlight.com](http://www.splytlight.com/)  
+[Splyt UI Demo Here](http://scottleinweber.com/splyt/)
+
+Check out the Splyt Light project at [splytlight.com](http://www.splytlight.com/)  
 
 
 ### TODO

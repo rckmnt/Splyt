@@ -12,6 +12,7 @@
 		<script src="js/Detector.js"></script>
 		<script src="js/dat.gui.js"></script>
 		<script src="js/JSONLoader.js"></script>
+		<script src="src/splyt.js"></script>
 		<script>
 
 			(function() {
@@ -31,10 +32,10 @@
 
 					// Camera
 
-					var focus = new THREE.Vector3(0, 10, 0);
+					var focus = new THREE.Vector3(0, 1000, 0);
 					camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, 0.1, 1000 );
-					camera.position.set(100, 100, 200);
-					camera.lookAt(focus);
+					camera.position.set(200, 200, 300);
+					camera.lookAt(focus);										// Doesn't seem to work
 					camera.updateProjectionMatrix();
 
 					controls = new THREE.OrbitControls(camera);
@@ -97,7 +98,7 @@
 					);
 
 					//scene.add(createSplytLine());  // skeleton wireframe
-					scene.add(createSmallSplyt());
+					scene.add(createSplytUnit(splytSize.large));
 
 				}
 
@@ -126,49 +127,6 @@
 					var pline = new THREE.Line(skeleton, lineMaterial);
 					return pline;
 				}
-
-
-				function createSmallSplyt(rotation) {
-
-					var r = 9.25;
-					var bHeight = 30;
-					var armLength = 40;
-
-					var rightTransGroup = new THREE.Object3D;
- 					var leftTransGroup =  new THREE.Object3D;
-
-					var base = new THREE.CylinderGeometry(r, r, bHeight, 24, 8, false);
-					base.translate(0, bHeight/2, 0);
-
-					var rArm = new THREE.CylinderGeometry(r, r, armLength, 24, 8, false);
-					rArm.rotateZ(-Math.radians(30));
-					rArm.translate( 10, bHeight + 17.32, 0);
-
-					rightTransGroup.rotateZ(-Math.radians(30));
-					rightTransGroup.translate( 20, bHeight + 34.64, 0);
-
-					var lArm = new THREE.CylinderGeometry(r, r, armLength, 24, 8, false);
-					lArm.rotateZ( Math.radians(30) );
-					lArm.translate( -10, bHeight + 17.32, 0);
-
-					leftTransGroup.rotateZ( Math.radians(30) );
-					leftTransGroup.translate( -20, bHeight + 34.64, 0);
-
-					var materials = [
-						new THREE.MeshLambertMaterial( { color:  0xFFF9DC, shading: THREE.SmoothShading } )
-						//new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true , transparent: true, opacity: 0.1} )
-					];
-
-					var smallYGeo = new THREE.Geometry();
-					smallYGeo.merge(base, base.matrix);
-					smallYGeo.merge(rArm, rArm.matrix);
-					smallYGeo.merge(lArm, lArm.matrix);
-					smallYGeo.rotateY(Math.radians( 180 * Math.random() ));
-
-					var smallYMesh = new THREE.SceneUtils.createMultiMaterialObject(smallYGeo, materials);
-					smallYMesh.name = name;
-					return smallYMesh;
-				};
 
 				// Render
 

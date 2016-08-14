@@ -97,35 +97,35 @@
 						}
 					);
 
-					//scene.add(createSplytLine());  // skeleton wireframe
+					//scene.add(createSplytWires());  // skeleton wireframe
 					scene.add(createSplytUnit(splytSize.large));
 
 				}
 
+				// Recurse attempt
 
-				// Geometry
+				basetransform = new THREE.Matrix4()
 
-				function createSplytLine(){
+				function createSplytTree(state, transform){
+						create a new THREE.Group()
+						if !state{
+							return
+						}
+						else{
+							var endTransforms {
+								left: new THREE.Matrix4() end tranforms
+								right: new THREE.Matrix4() end tranforms
+							}
 
-					var skeleton = new THREE.Geometry();
-					skeleton.vertices.push(
-							new THREE.Vector3(0, 0, 0),
-							new THREE.Vector3(0, 5, 0),
-							new THREE.Vector3(3, 8, 0),
-							new THREE.Vector3(0, 5, 0),
-							new THREE.Vector3(-3, 8, 0)
-					);
+							var group = new THREE.Group()
+							group.add(createSplytUnit());
+							group.add(createSplytTree(state.left, endTransforms.left);
+							group.add(createSplytTree(state.right, endTransforms.right);
+							return Group
+						}
 
-					var lineMaterial = new THREE.LineBasicMaterial({color: 0x0000ff});
 
-					var extrudeSettings = {
-							steps	: 200,
-							bevelEnabled	: false,
-							extrudePath		: skeleton
-					};
 
-					var pline = new THREE.Line(skeleton, lineMaterial);
-					return pline;
 				}
 
 				// Render

@@ -1,4 +1,15 @@
+// For all 3d Geometry definition
+
+var state = {
+  "name": "My Splyt",
+  "left": {
+    "right": {}
+  },
+  "right": {}
+}
+
 // Define Splyt Dimensions
+
 var splytSize = {
   small: {
     r : 9.25,
@@ -19,26 +30,27 @@ function createSplytUnit(size) {
   var r = size.r;
   var bHeight = size.bHeight;
   var armLength = size.armLength;
+  var radSegments = 24;
+  var heightSegments = 8;
 
-  var rightTransGroup = new THREE.Object3D;
-  var leftTransGroup =  new THREE.Object3D;
+  // tranforms for Left and Right XForms
+  // var transformLeft = new THREE.Matrix4();
+  // var transformRight = new THREE.Matrix4();
+  // transformLeft.setPosition( - 0.5 * armLength, bHeight + 0.5 * armLength * Math.sqrt(3), 0);
+  // transformLeft.makeRotationZ( - Math.radians(30));
+  // transformRight.setPosition( + 0.5 * armLength, bHeight + 0.5 * armLength * Math.sqrt(3), 0);
+  // transformRight.makeRotationZ(+ Math.radians(30));
 
-  var base = new THREE.CylinderGeometry(r, r, bHeight, 24, 8, false);
+  var base = new THREE.CylinderGeometry(r, r, bHeight, radSegments, heightSegments, false);
   base.translate(0, bHeight/2, 0);
 
-  var rArm = new THREE.CylinderGeometry(r, r, armLength, 24, 8, false);
+  var rArm = new THREE.CylinderGeometry(r, r, armLength, radSegments, heightSegments, false);
   rArm.rotateZ(-Math.radians(30));
   rArm.translate( 0.25 * armLength, bHeight + 0.25 * armLength * Math.sqrt(3), 0);
 
-  rightTransGroup.rotateZ(-Math.radians(30));
-  rightTransGroup.translate( 0.5 * armLength, bHeight + 0.5 * armLength * Math.sqrt(3), 0);
-
-  var lArm = new THREE.CylinderGeometry(r, r, armLength, 24, 8, false);
+  var lArm = new THREE.CylinderGeometry(r, r, armLength, radSegments, heightSegments, false);
   lArm.rotateZ( Math.radians(30) );
   lArm.translate( -0.25 * armLength, bHeight + 0.25 * armLength * Math.sqrt(3), 0);
-
-  leftTransGroup.rotateZ( Math.radians(30) );
-  leftTransGroup.translate( -0.5 * armLength, bHeight + 0.5 * armLength * Math.sqrt(3), 0);
 
   var materials = [
     new THREE.MeshLambertMaterial( { color:  0xFFF9DC, shading: THREE.SmoothShading } )
@@ -54,13 +66,10 @@ function createSplytUnit(size) {
   var smallYMesh = new THREE.SceneUtils.createMultiMaterialObject(smallYGeo, materials);
   smallYMesh.name = name;
 
-  return {
-    smallYMesh: smallYMesh,
-    name: smallYMesh.name,
-    leftTransGroup: ??,
-    rightTransGroup: ??
-  }
+  return smallYMesh;
 };
+
+
 
 // haven't updated - a skeletal wireframe of a Splyt
 function createSplytWires(){

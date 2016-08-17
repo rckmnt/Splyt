@@ -33,7 +33,7 @@
 					// Camera
 
 					var focus = new THREE.Vector3(0, 1000, 0);
-					camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, 0.1, 1000 );
+					camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, 0.1, 10000 );
 					camera.position.set(200, 200, 300);
 					camera.lookAt(focus);										// Doesn't seem to work
 					camera.updateProjectionMatrix();
@@ -43,7 +43,7 @@
 
 					renderer = new THREE.WebGLRenderer();
 					renderer.setClearColor(0xffffff, 1);
-					renderer.shadowMapEnabled = true;
+					renderer.shadowMap.enabled = true;
 					renderer.setSize( window.innerWidth, window.innerHeight );
 					document.body.appendChild( renderer.domElement );
 
@@ -105,7 +105,7 @@
 				// Recurse attempt
 
 				basetransform = new THREE.Matrix4()
-
+/*
 				function createSplytTree(state, transform){
 						create a new THREE.Group()
 						if !state{
@@ -123,11 +123,8 @@
 							group.add(createSplytTree(state.right, endTransforms.right);
 							return Group
 						}
-
-
-
 				}
-
+*/
 				// Render
 
 				function render() {

@@ -43,7 +43,7 @@
 
 					renderer = new THREE.WebGLRenderer();
 					renderer.setClearColor(0xffffff, 1);
-					renderer.shadowMapEnabled = true;
+					renderer.shadowMap.enabled = true;
 					renderer.setSize( window.innerWidth, window.innerHeight );
 					document.body.appendChild( renderer.domElement );
 
@@ -99,19 +99,25 @@
 */
 					//scene.add(createSplytWires());  // skeleton wireframe
 					//scene.add(createSplytUnit(splytSize.large));
-
 					scene.add(createSplytTree(state, baseTransform))
 				}
 
-				// Recurse attempt
+				// XForm as a separate function, transforms input xform into Left and Right outputs
+
+				var r = 9.25;					// these should be called from either splytSize.large or splytSize.small
+				var bHeight = 30;
+				var armLength = 40;
 
 				function xform(transform){
 
-					var xLeft = transform;
+					var xLeft = new THREE.Matrix4();
+					console.log(xLeft);
+					xLeft.clone(transform);
 					xLeft.setPosition( - 0.5 * armLength, bHeight + 0.5 * armLength * Math.sqrt(3), 0);
 					xLeft.makeRotationZ( - Math.radians(30));
 
-					var xRight = transform;
+					var xRight = new THREE.Matrix4();
+					xRight.clone(transform);
 					xRight.setPosition( 0.5 * armLength, bHeight + 0.5 * armLength * Math.sqrt(3), 0);
 					xRight.makeRotationZ(+ Math.radians(30));
 
@@ -119,18 +125,14 @@
 						left : xLeft,
 						right: xRight
 					}
-
 				}
 
-				var baseTransform = new THREE.Matrix4()
+				// Recursive Tree Attempt
+
+				var baseTransform = new THREE.Matrix4();
 
 				function createSplytTree(state, transform){
-
 						console.log(state);
-						console.log(state.left);
-						var r = 9.25;					// these should be called from either splytSize.large or splytSize.small
-						var bHeight = 30;
-						var armLength = 40;
 
 						if (state === null){
 							createSplytUnit(splytSize.small);
@@ -138,8 +140,16 @@
 						else {
 							var group = new THREE.Group()
 							group.add(createSplytUnit(splytSize.small));
-							if (state.left){group.add(createSplytTree(state.left, xform.left));}
-							else if (state.right) {group.add(createSplytTree(state.right, xform.right));}
+							xform(transform);
+
+							if (state.left){
+								console.log("There was a Left!");
+								group.add(createSplytTree(state.left, xform.left));
+							}
+							else if (state.right){
+								console.log("There was a Left!");
+								group.add(createSplytTree(state.right, xform.right));
+							}
 							return group
 						}
 				}

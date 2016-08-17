@@ -11,16 +11,8 @@ var state = {
 // Define Splyt Dimensions
 
 var splytSize = {
-  small: {
-    r : 9.25,
-    bHeight : 30,
-    armLength : 40
-  },
-  large: {
-    r : 9.25,
-    bHeight : 70,
-    armLength : 80
-  }
+  small: { r : 9.25, bHeight : 30, armLength : 40 },
+  large: { r : 9.25, bHeight : 70, armLength : 80 }
 };
 
 // Create the actual 3d Splyt
@@ -32,14 +24,6 @@ function createSplytUnit(size) {
   var armLength = size.armLength;
   var radSegments = 24;
   var heightSegments = 8;
-
-  // tranforms for Left and Right XForms
-  // var transformLeft = new THREE.Matrix4();
-  // var transformRight = new THREE.Matrix4();
-  // transformLeft.setPosition( - 0.5 * armLength, bHeight + 0.5 * armLength * Math.sqrt(3), 0);
-  // transformLeft.makeRotationZ( - Math.radians(30));
-  // transformRight.setPosition( + 0.5 * armLength, bHeight + 0.5 * armLength * Math.sqrt(3), 0);
-  // transformRight.makeRotationZ(+ Math.radians(30));
 
   var base = new THREE.CylinderGeometry(r, r, bHeight, radSegments, heightSegments, false);
   base.translate(0, bHeight/2, 0);

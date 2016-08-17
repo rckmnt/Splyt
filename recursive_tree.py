@@ -1,8 +1,6 @@
 import Rhino.Geometry as rg
 
-#tree variables
 lines = []
-
 
 #Define a Function
 def Branch(startPt, angle, length, gen, rotate, scale):

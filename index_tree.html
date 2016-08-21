@@ -55,7 +55,6 @@
 					var GUIpanel = new function() {
 						this.rotation = 5;
 					}
-
 					var gui = new dat.GUI();
 					var rotation = gui.add(GUIpanel, 'rotation', 0, 180);
 					*/
@@ -83,74 +82,63 @@
 					light = new THREE.AmbientLight( 0x222222 );
 					scene.add(light);
 
-					// load BULB
-/*
-					var loader = new THREE.JSONLoader();
-					loader.load(
-						'models/bulb_custom.js',
-						function ( geometry, materials ) {
-							var material = new THREE.MultiMaterial( materials );
-							var bulb = new THREE.Mesh( geometry, material );
-							bulb.position.set(0, 10, 0);
-							scene.add( bulb );
-							render();
-						}
-					);
-*/
 					//scene.add(createSplytWires());  // skeleton wireframe
 					//scene.add(createSplytUnit(splytSize.large));
-					scene.add(createSplytTree(state, baseTransform))
+					var group = createSplytTree(new THREE.Group(), state, baseTransform);
+					console.log(group);
+					scene.add(group);
 				}
 
 				// XForm as a separate function, transforms input xform into Left and Right outputs
 
-				var r = 9.25;					// these should be called from either splytSize.large or splytSize.small
-				var bHeight = 30;
-				var armLength = 40;
+				function xformSplyt(object, size, direction){
+					var armLength = size.armLength;
+					var bHeight = size.bHeight;
+					var r = size.r;
 
-				function xform(transform){
-
-					var xLeft = new THREE.Matrix4();
-					console.log(xLeft);
-					xLeft.clone(transform);
-					xLeft.setPosition( - 0.5 * armLength, bHeight + 0.5 * armLength * Math.sqrt(3), 0);
-					xLeft.makeRotationZ( - Math.radians(30));
-
-					var xRight = new THREE.Matrix4();
-					xRight.clone(transform);
-					xRight.setPosition( 0.5 * armLength, bHeight + 0.5 * armLength * Math.sqrt(3), 0);
-					xRight.makeRotationZ(+ Math.radians(30));
-
-					return {
-						left : xLeft,
-						right: xRight
+					if (direction === 'left'){
+						object.rotateZ(Math.radians(-30));
+						object.position.set(30, 70, 0);
 					}
+					else{
+						rightGroup.rotateZ(Math.radians(+30));
+						rightGroup.position.set(-30, 70, 0);
+					}
+					// Math to rewrite here...
+					// rArm.rotateZ(-Math.radians(30));
+					// rArm.translate( 0.25 * armLength, bHeight + 0.25 * armLength * Math.sqrt(3), 0);
 				}
 
 				// Recursive Tree Attempt
 
 				var baseTransform = new THREE.Matrix4();
 
-				function createSplytTree(state, transform){
-						console.log(state);
+				(function() {
+					var matrix = new THREE.Matrix4();
+					matrix.setPosition(new THREE.Vector3(10, 10, 10));
+				}());
 
-						if (state === null){
-							createSplytUnit(splytSize.small);
-						}
-						else {
-							var group = new THREE.Group()
+				function createSplytTree(group, state){
+
+						if (!state){
+							return group;
+						} else {
+							//var newTransforms = xformSplyt(object, splytSize.small, direction);
+							
+							var leftGroup = createSplytTree(new THREE.Group(), state.left);
+							// THIS IS WHAT IT SHOULD DO - transformSplyt(leftGroup, splytSizes.small, 'left');
+							leftGroup.rotateZ(Math.radians(-30));
+							leftGroup.position.set(30, 70, 0);
+
+							var rightGroup = createSplytTree(new THREE.Group(), state.right);
+							rightGroup.rotateZ(Math.radians(+30));
+							rightGroup.position.set(-30, 70, 0);
+
+							group.add(leftGroup);
+							group.add(rightGroup);
 							group.add(createSplytUnit(splytSize.small));
-							xform(transform);
 
-							if (state.left){
-								console.log("There was a Left!");
-								group.add(createSplytTree(state.left, xform.left));
-							}
-							else if (state.right){
-								console.log("There was a Left!");
-								group.add(createSplytTree(state.right, xform.right));
-							}
-							return group
+							return group;
 						}
 				}
 

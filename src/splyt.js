@@ -3,9 +3,12 @@
 var state = {
   "name": "My Splyt",
   "left": {
-    "right": {}
+    "right": {},
+    "left": {}
   },
-  "right": {}
+  "right": {
+    "left":{}
+  }
 }
 
 // Define Splyt Dimensions

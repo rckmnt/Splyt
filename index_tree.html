@@ -50,15 +50,6 @@
 					var axisHelper = new THREE.AxisHelper( 50 );
 					scene.add( axisHelper );
 
-					// GUIpanel
-					/*
-					var GUIpanel = new function() {
-						this.rotation = 5;
-					}
-					var gui = new dat.GUI();
-					var rotation = gui.add(GUIpanel, 'rotation', 0, 180);
-					*/
-
 					// Ground plane
 
 					var planeGeometry = new THREE.PlaneGeometry( 100, 100, 1, 1);
@@ -89,7 +80,7 @@
 					scene.add(group);
 				}
 
-				// XForm as a separate function, transforms input xform into Left and Right outputs
+				// XForm, transforms input xform into Left and Right outputs
 
 				function xformSplyt(object, size, direction){
 					var armLength = size.armLength;
@@ -97,26 +88,18 @@
 					var r = size.r;
 
 					if (direction === 'left'){
-						object.rotateZ(Math.radians(-30));
-						object.position.set(30, 70, 0);
+						object.position.set( - 0.5 * armLength, bHeight + 0.5 * armLength * Math.sqrt(3), 0);
+						object.rotateZ(Math.radians(+30));
 					}
 					else{
-						rightGroup.rotateZ(Math.radians(+30));
-						rightGroup.position.set(-30, 70, 0);
+						object.position.set( + 0.5 * armLength, bHeight + 0.5 * armLength * Math.sqrt(3), 0);
+						object.rotateZ(Math.radians(-30));
 					}
-					// Math to rewrite here...
-					// rArm.rotateZ(-Math.radians(30));
-					// rArm.translate( 0.25 * armLength, bHeight + 0.25 * armLength * Math.sqrt(3), 0);
 				}
 
 				// Recursive Tree Attempt
 
 				var baseTransform = new THREE.Matrix4();
-
-				(function() {
-					var matrix = new THREE.Matrix4();
-					matrix.setPosition(new THREE.Vector3(10, 10, 10));
-				}());
 
 				function createSplytTree(group, state){
 
@@ -124,15 +107,17 @@
 							return group;
 						} else {
 							//var newTransforms = xformSplyt(object, splytSize.small, direction);
-							
+
 							var leftGroup = createSplytTree(new THREE.Group(), state.left);
+							xformSplyt(leftGroup, splytSize.small, "left");
 							// THIS IS WHAT IT SHOULD DO - transformSplyt(leftGroup, splytSizes.small, 'left');
-							leftGroup.rotateZ(Math.radians(-30));
-							leftGroup.position.set(30, 70, 0);
+							//leftGroup.rotateZ(Math.radians(-30));
+							//leftGroup.position.set(30, 70, 0);
 
 							var rightGroup = createSplytTree(new THREE.Group(), state.right);
-							rightGroup.rotateZ(Math.radians(+30));
-							rightGroup.position.set(-30, 70, 0);
+							xformSplyt(rightGroup, splytSize.small, "right");
+							//rightGroup.rotateZ(Math.radians(+30));
+							//rightGroup.position.set(-30, 70, 0);
 
 							group.add(leftGroup);
 							group.add(rightGroup);

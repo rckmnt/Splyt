@@ -4,10 +4,12 @@ var state = {
   "name": "My Splyt",
   "left": {
     "right": {},
-    "left": {}
+    "left": {
+      "left": {}
+    }
   },
   "right": {
-    "left":{}
+    // "left":{}
   }
 }
 

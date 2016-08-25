@@ -5,13 +5,19 @@ var state = {
   "left": {
     "right": {},
     "left": {
+      "right": {},
       "left": {}
     }
   },
   "right": {
-    // "left":{}
+    "left":{
+      "right": {},
+      "left": {
+        "left": {}
+          }
+      }
   }
-}
+};
 
 // Define Splyt Dimensions
 

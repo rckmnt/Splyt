@@ -32,8 +32,8 @@
 
 					// Camera
 
-					var focus = new THREE.Vector3(0, 1000, 0);
-					camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, 0.1, 1000 );
+					var focus = new THREE.Vector3(0, 4000, 0);
+					camera = new THREE.PerspectiveCamera( 30, window.innerWidth/window.innerHeight, 0.1, 10000 );
 					camera.position.set(200, 200, 300);
 					camera.lookAt(focus);										// Doesn't seem to work
 					camera.updateProjectionMatrix();
@@ -41,7 +41,7 @@
 					controls = new THREE.OrbitControls(camera);
 					controls.addEventListener('change', render);
 
-					renderer = new THREE.WebGLRenderer();
+					renderer = new THREE.WebGLRenderer({antialias: true});
 					renderer.setClearColor(0xffffff, 1);
 					renderer.shadowMap.enabled = true;
 					renderer.setSize( window.innerWidth, window.innerHeight );

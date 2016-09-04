@@ -64,6 +64,15 @@ function createSplytUnit(size) {
   return smallYMesh;
 };
 
+function createBulb(){
+  var bulbGeo = new THREE.SphereGeometry(50, 32, 32):
+  var bulbMaterial = new THREE.MeshLambertMaterial({color: 0x201A16, transparent: true, opacity: 0.7, side: THREE.DoubleSide});
+  var bulb = new THREE.Mesh(bulbGeometry,bulbMaterial);
+
+  scene.add(bulb);
+  return bulb;
+
+}
 
 
 // haven't updated - a skeletal wireframe of a Splyt
